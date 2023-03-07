@@ -21,7 +21,7 @@ public class WebsocketServer {
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new WebSocketServerInitializer());
             ChannelFuture chf = b.bind(5544).sync();
-            log.info("!!!!Websocket chat server is Alive!!!!");
+            log.info("!!!!Netty websocket chat server is Alive!!!!");
             chf.channel().closeFuture().sync();
 
         } finally {
