@@ -21,8 +21,13 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocke
             String request = ((TextWebSocketFrame) frame).text();
             log.info("Received request: " + request);
             channels.forEach(channel -> {
-                log.info("Sending response to client {}", channel);
-                channel.writeAndFlush(new TextWebSocketFrame("Response:" + request));
+                if (channel.equals(ctx.channel())) {
+                    log.info("Sending response to player {}", channel);
+                    channel.writeAndFlush(new TextWebSocketFrame("PlayerResponse:" + request));
+                } else {
+                    log.info("Sending response to enemy {}", channel);
+                    channel.writeAndFlush(new TextWebSocketFrame("EnemyResponse:" + request));
+                }
             });
 
         } else {
